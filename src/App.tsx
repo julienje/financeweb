@@ -8,6 +8,7 @@ const App = () => {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
+                setDate(new Date())
             })
             .catch((err) => {
                 console.log(err.message);
@@ -20,6 +21,7 @@ const App = () => {
                 <input type="date" name="date"/>
                 <input type="submit" value="Submit"/>
             </form>
+            {date.toDateString()}
         </div>
     );
 };
