@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import {getWealth} from "./Service";
+import {getWealth} from "./service";
 
 const App = () => {
     const [date, setDate] = useState('');
