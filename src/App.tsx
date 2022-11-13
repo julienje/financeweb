@@ -1,27 +1,28 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
+import {getWealth} from "./Service";
 
 const App = () => {
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState('');
     useEffect(() => {
-        fetch(process.env.REACT_APP_BACKEND_URL + '/wealth')
-            .then((response) => response.json())
-            .then((data) => {
+        if (!!date) {
+            const controller = new AbortController();
+            const result = async () => {
+                const data= await getWealth(controller.signal);
                 console.log(data);
-                setDate(new Date())
-            })
-            .catch((err) => {
-                console.log(err.message);
-            });
-    }, []);
+            }
+            result();
+            return controller.abort;
+        }
+    }, [date]);
     return (
         <div>
             <form>
                 <label>Date:</label>
-                <input type="date" name="date"/>
+                <input type="date" name="date" value={date} onChange={(event)=>setDate(event.target.value)}/>
                 <input type="submit" value="Submit"/>
             </form>
-            {date.toDateString()}
+            {date}
         </div>
     );
 };

@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92e94f34-2a71-4424-9ee8-82849e1e8f18" name="Changes" comment="feat: fix eslint">
-      <change beforePath="$PROJECT_DIR$/src/App.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.test.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,10 +35,10 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "wsl://Distrod@/home/julien/.nvm/versions/node/v18.12.0/bin/node",
+    "nodejs_interpreter_path": "/home/julien/.nvm/versions/node/v18.12.1/bin/node",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "settings.nodejs",
-    "ts.external.directory.path": "\\\\wsl$\\Distrod\\home\\julien\\workspace\\financeweb\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "/home/julien/WebstormProjects/financeweb/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -47,7 +49,7 @@
       <scripts>
         <script value="start" />
       </scripts>
-      <node-interpreter value="wsl://Distrod@/home/julien/.nvm/versions/node/v18.12.0/bin/node" />
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.12.1/bin/node" />
       <envs />
       <method v="2" />
     </configuration>
@@ -66,6 +68,8 @@
       <option name="presentableId" value="Default" />
       <updated>1668192261235</updated>
       <workItem from="1668192266404" duration="1143000" />
+      <workItem from="1668232756475" duration="1384000" />
+      <workItem from="1668331947078" duration="2168000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add env and make a simple project">
       <created>1668195035262</created>
