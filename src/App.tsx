@@ -1,28 +1,23 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import './App.css';
-import {getWealth} from "./service";
+import {Outlet} from "react-router";
+
 
 const App = () => {
-    const [date, setDate] = useState('');
-    useEffect(() => {
-        if (!!date) {
-            const controller = new AbortController();
-            const result = async () => {
-                const data= await getWealth(controller.signal);
-                console.log(data);
-            }
-            result();
-            return controller.abort;
-        }
-    }, [date]);
     return (
         <div>
-            <form>
-                <label>Date:</label>
-                <input type="date" name="date" value={date} onChange={(event)=>setDate(event.target.value)}/>
-                <input type="submit" value="Submit"/>
-            </form>
-            {date}
+            <div>
+                <div>
+                    <a href={`wealth`}>Wealth</a>
+                </div>
+                <div>
+                    <a href={`accounts`}>Accounts</a>
+                </div>
+            </div>
+
+            <div id="detail">
+                <Outlet/>
+            </div>
         </div>
     );
 };

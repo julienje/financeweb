@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92e94f34-2a71-4424-9ee8-82849e1e8f18" name="Changes" comment="feat: fix eslint">
-      <change afterPath="$PROJECT_DIR$/src/error-page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/accounts.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/wealth.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +33,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;//wsl$/Distrod/home/julien/workspace/financeweb&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/julien/WebstormProjects/financeweb/src&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -46,6 +45,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
@@ -75,6 +79,9 @@
       <workItem from="1668232756475" duration="1384000" />
       <workItem from="1668331947078" duration="2168000" />
       <workItem from="1668367764403" duration="2478000" />
+      <workItem from="1668844069704" duration="386000" />
+      <workItem from="1668845180209" duration="4272000" />
+      <workItem from="1668883329091" duration="4954000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add env and make a simple project">
       <created>1668195035262</created>
