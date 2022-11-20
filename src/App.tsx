@@ -14,7 +14,6 @@ const App = () => {
                     <a href={`accounts`}>Accounts</a>
                 </div>
             </div>
-
             <div id="detail">
                 <Outlet/>
             </div>
