@@ -20,14 +20,14 @@ const Wealth = () => {
 
 
     const renderWealth = () => {
-        const details = wealth?.Details.map(d=>{
-            return (
+        const emptyDetails = (<div>There is no details</div>);
+        const details = wealth?.Details.length === 0 ? emptyDetails : wealth?.Details.map(d =>
+            (
                 <div key={d.AccountId}>
                     <div>{d.AmountInChf}</div>
                     <div>{d.CheckDate}</div>
                 </div>
-            );
-        })
+            ));
         return (
             <div>
                 <div>My wealth for {wealth?.ExportDate} is {wealth?.AmountInChf} CHF.</div>

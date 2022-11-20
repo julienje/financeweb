@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="92e94f34-2a71-4424-9ee8-82849e1e8f18" name="Changes" comment="feat: fix eslint">
+    <list default="true" id="92e94f34-2a71-4424-9ee8-82849e1e8f18" name="Changes" comment="chore: fix tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.test.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/wealth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/wealth.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +93,7 @@
       <workItem from="1668844069704" duration="386000" />
       <workItem from="1668845180209" duration="4272000" />
       <workItem from="1668883329091" duration="4954000" />
-      <workItem from="1668931689229" duration="1099000" />
+      <workItem from="1668931689229" duration="1702000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add env and make a simple project">
       <created>1668195035262</created>
@@ -110,7 +109,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668195277003</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="chore: fix tests">
+      <created>1668932802289</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1668932802289</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,7 +136,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: add env and make a simple project" />
     <MESSAGE value="feat: fix eslint" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: fix eslint" />
+    <MESSAGE value="chore: fix tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: fix tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
