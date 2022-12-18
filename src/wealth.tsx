@@ -24,6 +24,7 @@ const Wealth = () => {
         const details = wealth?.Details.length === 0 ? emptyDetails : wealth?.Details.map(d =>
             (
                 <div key={d.AccountId}>
+                    <div>{d.AccountName} - {d.AccountCompany}</div>
                     <div>{d.AmountInChf}</div>
                     <div>{d.CheckDate}</div>
                 </div>
