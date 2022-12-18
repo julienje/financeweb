@@ -5,8 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import ErrorPage from "./error-page";
-import Wealth from "./wealth";
-import Accounts from "./accounts";
+import ShowWealth from "./show-wealth";
+import ShowAccounts from "./show-accounts";
+import AddBalances from "./add-balances";
 
 const router = createBrowserRouter([
     {
@@ -16,12 +17,16 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "wealth",
-                element: <Wealth />,
+                element : <ShowWealth/>
             },
             {
                 path: "accounts",
-                element: <Accounts />,
+                element: <ShowAccounts/>,
             },
+            {
+                path: "balances",
+                element: <AddBalances/>
+            }
         ],
     },
 ]);

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {getWealth, WealthDto} from "./service";
 
-const Wealth = () => {
+const ShowWealth = () => {
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const [wealth, setWealth] = useState<WealthDto>();
     useEffect(() => {
@@ -24,6 +24,7 @@ const Wealth = () => {
         const details = wealth?.Details.length === 0 ? emptyDetails : wealth?.Details.map(d =>
             (
                 <div key={d.AccountId}>
+                    <div>{d.AccountName} - {d.AccountCompany}</div>
                     <div>{d.AmountInChf}</div>
                     <div>{d.CheckDate}</div>
                 </div>
@@ -49,4 +50,4 @@ const Wealth = () => {
     );
 };
 
-export default Wealth;
+export default ShowWealth;

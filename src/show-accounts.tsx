@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {AccountDto, getAccounts} from "./service";
 
-const Accounts = () => {
+const ShowAccounts = () => {
     const [accounts, setAccounts] = useState<AccountDto[]>([]);
     useEffect(() => {
         const controller = new AbortController();
@@ -37,4 +37,4 @@ const Accounts = () => {
     );
 };
 
-export default Accounts;
+export default ShowAccounts;

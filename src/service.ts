@@ -1,5 +1,3 @@
-
-
 export interface WealthDto {
     AmountInChf: number,
     ExportDate: string
@@ -9,6 +7,8 @@ export interface WealthDto {
 export interface WealthAccountDto {
     AmountInChf: number
     AccountId: string
+    AccountName: string
+    AccountCompany: string
     CheckDate: string
 }
 

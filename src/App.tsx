@@ -11,6 +11,9 @@ const App = () => {
                     <a href={`wealth`}>Wealth</a>
                 </div>
                 <div>
+                    <a href={`balances`}>Balance</a>
+                </div>
+                <div>
                     <a href={`accounts`}>Accounts</a>
                 </div>
             </div>
