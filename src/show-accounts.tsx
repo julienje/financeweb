@@ -9,7 +9,7 @@ const ShowAccounts = () => {
             const data = await getAccounts(controller.signal);
             setAccounts(data);
         }
-        result();
+        result().catch(console.error);
         return () => {
             controller.abort();
         }

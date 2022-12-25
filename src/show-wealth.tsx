@@ -11,7 +11,7 @@ const ShowWealth = () => {
                 const data = await getWealth(controller.signal);
                 setWealth(data);
             }
-            result();
+            result().catch(console.error);
             return () => {
                 controller.abort();
             }
