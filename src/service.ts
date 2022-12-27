@@ -52,6 +52,7 @@ export const addBalances = async (signal: AbortSignal, balances: NewBalance): Pr
     Object.entries(balances).map(value => {
         const key = value[0];
         const balance = value[1];
+        console.log(JSON.stringify((balance)));
         fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${key}/balances/new`, {signal});
     })
     const request = await fetch(process.env.REACT_APP_BACKEND_URL + '/accounts/%s/balances/new', {signal});
