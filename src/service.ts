@@ -49,13 +49,17 @@ export const getAccounts = async (signal: AbortSignal): Promise<AccountDto[]> =>
 };
 
 export const addBalances = async (signal: AbortSignal, balances: NewBalance): Promise<AccountBalanceDto[]> => {
-    Object.entries(balances).map(value => {
+    const calls = Object.entries(balances).map(value => {
         const key = value[0];
         const balance = value[1];
-        console.log(JSON.stringify((balance)));
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${key}/balances/new`, {signal});
-    })
-    const request = await fetch(process.env.REACT_APP_BACKEND_URL + '/accounts/%s/balances/new', {signal});
-    const json = await request.json();
-    return json as AccountBalanceDto[];
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(balance),
+            signal: signal
+        };
+        return fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${key}/balances/new`, requestOptions);
+    });
+    console.log(calls.length);
+    return [];
 };
