@@ -1,5 +1,5 @@
 import React, {FormEvent, useEffect, useState} from "react";
-import {AccountDto, AddBalanceDto, addBalances, getAccounts, NewBalance} from "./service";
+import {AccountDto, addBalances, getAccounts, NewBalance} from "./service";
 
 interface BalanceInfo{
     [index: string]: string | undefined;
