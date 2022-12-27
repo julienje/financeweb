@@ -33,7 +33,7 @@ export interface AccountBalanceDto {
 }
 
 export interface NewBalance {
-    [index: string]: string | undefined;
+    [index: string]: AddBalanceDto;
 }
 
 export const getWealth = async (signal: AbortSignal): Promise<WealthDto> => {
@@ -48,9 +48,12 @@ export const getAccounts = async (signal: AbortSignal): Promise<AccountDto[]> =>
     return json as AccountDto[];
 };
 
-export const addBalances = async (signal: AbortSignal, balances: AddBalanceDto[]): Promise<AccountBalanceDto[]> => {
-
-
+export const addBalances = async (signal: AbortSignal, balances: NewBalance): Promise<AccountBalanceDto[]> => {
+    Object.entries(balances).map(value => {
+        const key = value[0];
+        const balance = value[1];
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${key}/balances/new`, {signal});
+    })
     const request = await fetch(process.env.REACT_APP_BACKEND_URL + '/accounts/%s/balances/new', {signal});
     const json = await request.json();
     return json as AccountBalanceDto[];

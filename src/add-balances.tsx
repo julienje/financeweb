@@ -1,9 +1,12 @@
 import React, {FormEvent, useEffect, useState} from "react";
-import {AccountDto, getAccounts, NewBalance} from "./service";
+import {AccountDto, AddBalanceDto, addBalances, getAccounts, NewBalance} from "./service";
 
+interface BalanceInfo{
+    [index: string]: string | undefined;
+}
 const AddBalances = () => {
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-    const [balances, setBalances] = useState<NewBalance>({});
+    const [balances, setBalances] = useState<BalanceInfo>({});
     const [accounts, setAccounts] = useState<AccountDto[]>([]);
     useEffect(() => {
         const controller = new AbortController();
@@ -33,10 +36,19 @@ const AddBalances = () => {
     const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(`Form submitted, ${JSON.stringify(balances)}`);
+        const newBalance:NewBalance={};
         Object.entries(balances).forEach(([key, value]) => {
-            // 👇️ name Tom 0, country Chile 1
-            console.log(key, value  );
+            let amountInChf = Number(value);
+            if(!Number.isNaN(amountInChf )) {
+                newBalance[key] = {
+                    CheckDate: date,
+                    AmountInChf: amountInChf
+                }
+            }
         });
+        console.log(JSON.stringify(newBalance));
+        const controller = new AbortController();
+        addBalances(controller.signal,newBalance);
     }
 
     return (
