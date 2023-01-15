@@ -23,16 +23,18 @@ const AddBalances = () => {
             controller.abort();
         }
     }, []);
-    const renderAccounts = () => accounts.map(a => {
+    const renderAccounts = () => accounts
+        .filter(a=> a.CloseDate == null)
+        .map(a => {
         return (
             <div key={a.Id}>
                 <label>
                     {a.Name}
                 </label>
-                <input type="string" name="balance" value={balances[a.Id] ?? ''} onChange={(event) => {
-                    const newBalance = {...balances, [a.Id]: event.target.value}
-                    setBalances(newBalance)
-                }}/>
+                {<input type="string" name="balance" value={balances[a.Id] ?? ''} onChange={(event) => setBalances({
+                    ...balances,
+                    [a.Id]: event.target.value
+                })}/>}
                 {sent[a.Id] ?? ''}
             </div>
         );
