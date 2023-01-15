@@ -48,18 +48,28 @@ export const getAccounts = async (signal: AbortSignal): Promise<AccountDto[]> =>
     return json as AccountDto[];
 };
 
-export const addBalances = async (signal: AbortSignal, balances: NewBalance): Promise<AccountBalanceDto[]> => {
-    const calls = Object.entries(balances).map(value => {
-        const key = value[0];
-        const balance = value[1];
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(balance),
-            signal: signal
-        };
-        return fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${key}/balances/new`, requestOptions);
-    });
-    console.log(calls.length);
-    return [];
+export const addBalances = async (signal: AbortSignal, accountId: string, balance: AddBalanceDto): Promise<AccountBalanceDto> => {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(balance),
+        signal: signal
+    };
+    const request= await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${accountId}/balances/new`, requestOptions);
+    const json = await request.json();
+    return json as AccountBalanceDto;
+
+    // const calls = Object.entries(balances).map(value => {
+    //     const key = value[0];
+    //     const balance = value[1];
+    //     const requestOptions = {
+    //         method: 'PUT',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(balance),
+    //         signal: signal
+    //     };
+    //     return fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${key}/balances/new`, requestOptions);
+    // });
+    // console.log(calls.length);
+    // return [];
 };
