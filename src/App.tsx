@@ -1,25 +1,20 @@
 import React from 'react';
 import './App.css';
 import {Outlet} from "react-router";
-
+import {AuthenticatedTemplate, UnauthenticatedTemplate, useMsalAuthentication} from "@azure/msal-react";
+import {InteractionType} from "@azure/msal-browser";
+import PageLayout from "./components/page-layout";
 
 const App = () => {
+    useMsalAuthentication(InteractionType.Redirect);
     return (
         <div>
-            <div>
-                <div>
-                    <a href={`wealth`}>Wealth</a>
-                </div>
-                <div>
-                    <a href={`balances`}>Balance</a>
-                </div>
-                <div>
-                    <a href={`accounts`}>Accounts</a>
-                </div>
-            </div>
-            <div id="detail">
-                <Outlet/>
-            </div>
+            <AuthenticatedTemplate>
+                <PageLayout/>
+            </AuthenticatedTemplate>
+            <UnauthenticatedTemplate>
+                <p>You are not signed in! Please sign in.</p>
+            </UnauthenticatedTemplate>
         </div>
     );
 };

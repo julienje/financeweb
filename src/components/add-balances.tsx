@@ -1,11 +1,13 @@
 import React, {FormEvent, useEffect, useState} from "react";
-import {AccountDto, addBalances, getAccounts} from "./service";
+import {AccountDto, addBalances, getAccounts} from "../service";
+import {useMsal} from "@azure/msal-react";
 
 interface BalanceInfo {
     [index: string]: string | undefined;
 }
 
 const AddBalances = () => {
+    const { instance } = useMsal();
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const [accounts, setAccounts] = useState<AccountDto[]>([]);
     const [balances, setBalances] = useState<BalanceInfo>({});
@@ -15,14 +17,14 @@ const AddBalances = () => {
     useEffect(() => {
         const controller = new AbortController();
         const result = async () => {
-            const data = await getAccounts(controller.signal);
+            const data = await getAccounts(controller.signal, instance);
             setAccounts(data);
         }
         result().catch(console.error);
         return () => {
             controller.abort();
         }
-    }, []);
+    }, [instance]);
     const renderAccounts = () => accounts
         .filter(a=> a.CloseDate == null)
         .map(a => {
@@ -47,7 +49,7 @@ const AddBalances = () => {
         Object.entries(balances).forEach(([key, value]) => {
             let amountInChf = Number(value);
             if (!Number.isNaN(amountInChf)) {
-                addBalances(controller.signal, key, {
+                addBalances(controller.signal,instance, key, {
                     CheckDate: date,
                     AmountInChf: amountInChf
                 }).then(() => {

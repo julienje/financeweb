@@ -1,3 +1,5 @@
+import {IPublicClientApplication} from "@azure/msal-browser";
+
 export interface WealthDto {
     AmountInChf: number,
     ExportDate: string
@@ -32,44 +34,41 @@ export interface AccountBalanceDto {
     AmountInChf: number
 }
 
-export interface NewBalance {
-    [index: string]: AddBalanceDto;
+async function getAuthorizedHeaders(instance: IPublicClientApplication) {
+    const tokenResult = await instance.acquireTokenSilent({
+        scopes: ['user.read'],
+        account: instance.getAllAccounts()[0]
+    });
+    const t = tokenResult.accessToken
+    return new Headers({
+        'Authorization': 'Bearer ' + t
+    });
 }
 
-export const getWealth = async (signal: AbortSignal): Promise<WealthDto> => {
-    const request = await fetch(process.env.REACT_APP_BACKEND_URL + '/wealth', {signal});
+export const getWealth = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<WealthDto> => {
+    const headers = await getAuthorizedHeaders(instance);
+    const request = await fetch(process.env.REACT_APP_BACKEND_URL + '/wealth', {signal, headers});
     const json = await request.json();
     return json as WealthDto;
 };
 
-export const getAccounts = async (signal: AbortSignal): Promise<AccountDto[]> => {
-    const request = await fetch(process.env.REACT_APP_BACKEND_URL + '/accounts', {signal});
+export const getAccounts = async (signal: AbortSignal,instance: IPublicClientApplication): Promise<AccountDto[]> => {
+    const headers = await getAuthorizedHeaders(instance);
+    const request = await fetch(process.env.REACT_APP_BACKEND_URL + '/accounts', {signal,headers});
     const json = await request.json();
     return json as AccountDto[];
 };
 
-export const addBalances = async (signal: AbortSignal, accountId: string, balance: AddBalanceDto): Promise<AccountBalanceDto> => {
+export const addBalances = async (signal: AbortSignal, instance: IPublicClientApplication, accountId: string, balance: AddBalanceDto): Promise<AccountBalanceDto> => {
+    const headers = await getAuthorizedHeaders(instance);
+    headers.append('Content-Type','application/json');
     const requestOptions = {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify(balance),
-        signal: signal
+        signal
     };
     const request= await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${accountId}/balances/new`, requestOptions);
     const json = await request.json();
     return json as AccountBalanceDto;
-
-    // const calls = Object.entries(balances).map(value => {
-    //     const key = value[0];
-    //     const balance = value[1];
-    //     const requestOptions = {
-    //         method: 'PUT',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify(balance),
-    //         signal: signal
-    //     };
-    //     return fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${key}/balances/new`, requestOptions);
-    // });
-    // console.log(calls.length);
-    // return [];
 };

@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from "./App";
+import PageLayout from "./page-layout";
 
 test('renders learn react link', () => {
-  render(<App />);
-  const accounts = screen.getByText('You are not signed in! Please sign in.');
+  render(<PageLayout />);
+  const accounts = screen.getByText('Accounts');
   expect(accounts).toBeInTheDocument();
 });

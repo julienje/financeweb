@@ -4,10 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import ErrorPage from "./error-page";
-import ShowWealth from "./show-wealth";
-import ShowAccounts from "./show-accounts";
-import AddBalances from "./add-balances";
+import ErrorPage from "./components/error-page";
+import ShowWealth from "./components/show-wealth";
+import ShowAccounts from "./components/show-accounts";
+import AddBalances from "./components/add-balances";
+import {MsalProvider} from "@azure/msal-react";
+import {msalConfig} from "./authConfig";
+import {PublicClientApplication} from "@azure/msal-browser";
+
+const msalInstance = new PublicClientApplication(msalConfig);
+
 
 const router = createBrowserRouter([
     {
@@ -17,7 +23,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "wealth",
-                element : <ShowWealth/>
+                element: <ShowWealth/>
             },
             {
                 path: "accounts",
@@ -36,7 +42,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router}/>
+        <MsalProvider instance={msalInstance}>
+            <RouterProvider router={router}/>
+        </MsalProvider>
     </React.StrictMode>
 );
 

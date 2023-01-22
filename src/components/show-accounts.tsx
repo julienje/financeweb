@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {AccountDto, getAccounts} from "./service";
+import {AccountDto, getAccounts} from "../service";
+import {useMsal} from "@azure/msal-react";
 
 const ShowAccounts = () => {
+    const { instance } = useMsal();
     const [accounts, setAccounts] = useState<AccountDto[]>([]);
     useEffect(() => {
         const controller = new AbortController();
         const result = async () => {
-            const data = await getAccounts(controller.signal);
+            const data = await getAccounts(controller.signal, instance);
             setAccounts(data);
         }
         result().catch(console.error);
