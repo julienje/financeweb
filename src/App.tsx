@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import {Outlet} from "react-router";
 import {AuthenticatedTemplate, UnauthenticatedTemplate, useMsalAuthentication} from "@azure/msal-react";
 import {InteractionType} from "@azure/msal-browser";
 import PageLayout from "./components/page-layout";

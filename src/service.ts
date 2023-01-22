@@ -35,13 +35,12 @@ export interface AccountBalanceDto {
 }
 
 async function getAuthorizedHeaders(instance: IPublicClientApplication) {
-    const tokenResult = await instance.acquireTokenSilent({
+    const {accessToken} = await instance.acquireTokenSilent({
         scopes: ['user.read'],
         account: instance.getAllAccounts()[0]
     });
-    const t = tokenResult.accessToken
     return new Headers({
-        'Authorization': 'Bearer ' + t
+        'Authorization': 'Bearer ' + accessToken
     });
 }
 
@@ -52,23 +51,23 @@ export const getWealth = async (signal: AbortSignal, instance: IPublicClientAppl
     return json as WealthDto;
 };
 
-export const getAccounts = async (signal: AbortSignal,instance: IPublicClientApplication): Promise<AccountDto[]> => {
+export const getAccounts = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<AccountDto[]> => {
     const headers = await getAuthorizedHeaders(instance);
-    const request = await fetch(process.env.REACT_APP_BACKEND_URL + '/accounts', {signal,headers});
+    const request = await fetch(process.env.REACT_APP_BACKEND_URL + '/accounts', {signal, headers});
     const json = await request.json();
     return json as AccountDto[];
 };
 
 export const addBalances = async (signal: AbortSignal, instance: IPublicClientApplication, accountId: string, balance: AddBalanceDto): Promise<AccountBalanceDto> => {
     const headers = await getAuthorizedHeaders(instance);
-    headers.append('Content-Type','application/json');
+    headers.append('Content-Type', 'application/json');
     const requestOptions = {
         method: 'PUT',
         headers,
         body: JSON.stringify(balance),
         signal
     };
-    const request= await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${accountId}/balances/new`, requestOptions);
+    const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${accountId}/balances/new`, requestOptions);
     const json = await request.json();
     return json as AccountBalanceDto;
 };

@@ -15,7 +15,7 @@ const ShowAccounts = () => {
         return () => {
             controller.abort();
         }
-    }, []);
+    }, [instance]);
 
     const renderAccounts = () => accounts.map(a => {
         return (
