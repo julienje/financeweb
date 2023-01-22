@@ -18,7 +18,7 @@ const ShowWealth = () => {
                 controller.abort();
             }
         }
-    }, [date]);
+    }, [date, instance]);
 
 
     const renderWealth = () => {
