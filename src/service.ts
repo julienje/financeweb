@@ -36,7 +36,7 @@ export interface AccountBalanceDto {
 
 async function getAuthorizedHeaders(instance: IPublicClientApplication) {
     const {accessToken} = await instance.acquireTokenSilent({
-        scopes: ['user.read'],
+        scopes: ['api://1cfe66e3-db51-4082-93ad-0814bff72abf/default'],
         account: instance.getAllAccounts()[0]
     });
     return new Headers({
