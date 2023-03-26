@@ -1,24 +1,23 @@
 import {Outlet} from "react-router";
 import React from "react";
+import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
 
 const PageLayout = () => {
     return (
-        <div>
-            <div>
-                <div>
-                    <a href={`wealth`}>Wealth</a>
-                </div>
-                <div>
-                    <a href={`balances`}>Balance</a>
-                </div>
-                <div>
-                    <a href={`accounts`}>Accounts</a>
-                </div>
-            </div>
-            <div id="detail">
+        <Box>
+            <Box sx={{
+                typography: 'body1',
+                ml: 2
+            }}>
+                <Link href={`wealth`}>Wealth</Link>
+                <Link href={`balances`}>Balance</Link>
+                <Link href={`accounts`}>Accounts</Link>
+            </Box>
+            <Box>
                 <Outlet/>
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 };
 
