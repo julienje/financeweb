@@ -18,7 +18,6 @@ jobs:
       matrix:
         node-version: [lts]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        check-latest: true
 
     steps:
     - uses: actions/checkout@v3
@@ -26,6 +25,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+        check-latest: true
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
