@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-const darkTheme = createTheme({
+const theme = createTheme({
     palette: {
         mode: 'dark',
     },
@@ -13,7 +13,7 @@ const darkTheme = createTheme({
 
 const PageLayout = () => {
     return (
-        <ThemeProvider theme={darkTheme}>
+        <ThemeProvider theme={theme}>
             <CssBaseline/>
 
             <Box>
@@ -21,7 +21,7 @@ const PageLayout = () => {
                     display: 'flex',
                     backgroundColor: 'primary',
                     '& > a': {
-                        padding: darkTheme.spacing(1)
+                        padding: theme.spacing(1)
                     },
 
                 }}>
@@ -30,7 +30,7 @@ const PageLayout = () => {
                     <Link href={`accounts`}>Accounts</Link>
                 </Box>
                 <Box sx={{
-                    m: darkTheme.spacing(1)
+                    p: theme.spacing(1)
                 }}>
                     <Outlet/>
                 </Box>
