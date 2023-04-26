@@ -1,14 +1,24 @@
 import React, {FormEvent, useEffect, useState} from "react";
 import {AccountDto, addBalances, getAccounts} from "../service";
 import {useMsal} from "@azure/msal-react";
+import Box from "@mui/material/Box";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs, {Dayjs} from "dayjs";
+import {TextField} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import {useTheme} from '@mui/material/styles';
+
 
 interface BalanceInfo {
     [index: string]: string | undefined;
 }
 
 const AddBalances = () => {
-    const { instance } = useMsal();
-    const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+    const theme = useTheme();
+    const {instance} = useMsal();
+    const [date, setDate] = useState<Dayjs | null>(dayjs());
     const [accounts, setAccounts] = useState<AccountDto[]>([]);
     const [balances, setBalances] = useState<BalanceInfo>({});
     const [sent, setSent] = useState<{
@@ -26,38 +36,41 @@ const AddBalances = () => {
         }
     }, [instance]);
     const renderAccounts = () => accounts
-        .filter(a=> a.CloseDate == null)
+        .filter(a => a.CloseDate == null)
         .map(a => {
-        return (
-            <div key={a.Id}>
-                <label>
-                    {a.Name}
-                </label>
-                {<input type="string" name="balance" value={balances[a.Id] ?? ''} onChange={(event) => setBalances({
-                    ...balances,
-                    [a.Id]: event.target.value
-                })}/>}
-                {sent[a.Id] ?? ''}
-            </div>
-        );
-    });
+            return (
+                <Box key={a.Id} sx={{
+                    p: theme.spacing(1)
+                }}>
+                    {
+                        <TextField
+                            label={a.Name}
+                            inputProps={{inputMode: 'numeric'}}
+                            value={balances[a.Id] ?? ''}
+                            onChange={(event) => setBalances({
+                                ...balances,
+                                [a.Id]: event.target.value
+                            })}/>
+                    }
+                    {sent[a.Id] ?? ''}
+                </Box>
+            );
+        });
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(`Form submitted, ${JSON.stringify(balances)}`);
         const controller = new AbortController();
         Object.entries(balances).forEach(([key, value]) => {
             let amountInChf = Number(value);
             if (!Number.isNaN(amountInChf)) {
-                addBalances(controller.signal,instance, key, {
-                    CheckDate: date,
+                addBalances(controller.signal, instance, key, {
+                    CheckDate: date!.toISOString(), // TODO JJ Make validation of form?
                     AmountInChf: amountInChf
                 }).then(() => {
                     setSent(s => ({...s, [key]: 'Sent'}));
-                })
-                    .catch(() => {
-                        setSent(s => ({...s, [key]: 'Error from backend'}));
-                    });
+                }).catch(() => {
+                    setSent(s => ({...s, [key]: 'Error from backend'}));
+                });
             } else {
                 setSent(s => ({...s, [key]: 'Not a value skipped'}));
             }
@@ -65,16 +78,27 @@ const AddBalances = () => {
     }
 
     return (
-        <div>
+        <Box>
             <form onSubmit={handleSubmit}>
-                <label>
-                    Date:
-                    <input type="date" name="date" value={date} onChange={(event) => setDate(event.target.value)}/>
-                </label>
-                {renderAccounts()}
+                <h1>Add new Balances</h1>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        label="New Balance at"
+                        value={date}
+                        onChange={(newValue) => setDate(newValue)}
+                    />
+                </LocalizationProvider>
+                <Box sx={{
+                    p: theme.spacing(1)
+                }}>
+                    <Typography>
+                        Please add a balance for concerned account, leave blank to skip.
+                    </Typography>
+                    {renderAccounts()}
+                </Box>
                 <button type="submit">Submit</button>
             </form>
-        </div>
+        </Box>
     );
 }
 
