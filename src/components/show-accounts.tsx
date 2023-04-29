@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {AccountDto, getAccounts} from "../service";
 import {useMsal} from "@azure/msal-react";
+import Box from "@mui/material/Box";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Typography from "@mui/material/Typography";
+import {AccordionDetails} from "@mui/material";
 
 const ShowAccounts = () => {
     const { instance } = useMsal();
@@ -17,25 +23,34 @@ const ShowAccounts = () => {
         }
     }, [instance]);
 
+    const getCloseDate = (a: AccountDto) => {
+        if(a.CloseDate == null){
+            return '';
+        }
+        return 'and closed at {a.CloseDate}';
+    };
+
     const renderAccounts = () => accounts.map(a => {
         return (
-            <div key={a.Id}>
-                <div>
-                    {a.Name}
-                </div>
-                <div>{a.Company}</div>
-                <div>{a.OpenDate}</div>
-                <div>{a.CloseDate}</div>
-            </div>
+            <Accordion key={a.Id}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                    <Typography>{a.Name} - {a.Company}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+                        The account was open at {a.OpenDate} {getCloseDate(a)}
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
         );
     });
 
 
     return (
-        <div>
-            <div>Show your accounts:</div>
+        <Box>
+            <h1>Show your accounts:</h1>
             {renderAccounts()}
-        </div>
+        </Box>
     );
 };
 
