@@ -20,7 +20,7 @@ const ShowWealth = () => {
         if (!!date) {
             const controller = new AbortController();
             const result = async () => {
-                const data = await getWealth(controller.signal, instance);
+                const data = await getWealth(controller.signal, instance, date);
                 setWealth(data);
             }
             result().catch(console.error);

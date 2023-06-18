@@ -1,4 +1,5 @@
 import {IPublicClientApplication} from "@azure/msal-browser";
+import {Dayjs} from "dayjs";
 
 export interface WealthDto {
     AmountInChf: number,
@@ -44,16 +45,19 @@ async function getAuthorizedHeaders(instance: IPublicClientApplication) {
     });
 }
 
-export const getWealth = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<WealthDto> => {
+export const getWealth = async (signal: AbortSignal, instance: IPublicClientApplication, date: Dayjs): Promise<WealthDto> => {
     const headers = await getAuthorizedHeaders(instance);
-    const request = await fetch(process.env.REACT_APP_BACKEND_URL + '/wealth', {signal, headers});
+    const params = new URLSearchParams();
+    params.set('date',date.toISOString());
+
+    const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/wealth?${params}`, {signal, headers});
     const json = await request.json();
     return json as WealthDto;
 };
 
 export const getAccounts = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<AccountDto[]> => {
     const headers = await getAuthorizedHeaders(instance);
-    const request = await fetch(process.env.REACT_APP_BACKEND_URL + '/accounts', {signal, headers});
+    const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts`, {signal, headers});
     const json = await request.json();
     return json as AccountDto[];
 };
