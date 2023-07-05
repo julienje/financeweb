@@ -11,6 +11,7 @@ import AddBalances from "./components/add-balances";
 import {MsalProvider} from "@azure/msal-react";
 import {msalConfig} from "./authConfig";
 import {PublicClientApplication} from "@azure/msal-browser";
+import AddAccount from "./components/add-account";
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -32,7 +33,11 @@ const router = createBrowserRouter([
             {
                 path: "balances",
                 element: <AddBalances/>
-            }
+            },
+            {
+                path: "account/new",
+                element: <AddAccount/>,
+            },
         ],
     },
 ]);

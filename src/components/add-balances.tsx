@@ -6,7 +6,7 @@ import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs, {Dayjs} from "dayjs";
-import {TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useTheme} from '@mui/material/styles';
 
@@ -96,7 +96,7 @@ const AddBalances = () => {
                     </Typography>
                     {renderAccounts()}
                 </Box>
-                <button type="submit">Submit</button>
+                <Button variant="contained" type="submit">Submit</Button>
             </form>
         </Box>
     );
