@@ -35,6 +35,16 @@ export interface AccountBalanceDto {
     AmountInChf: number
 }
 
+export interface OpenAccountDto {
+    Name: string
+    Company: string
+    OpenDate: string
+}
+
+export interface ErrorDto{
+    error: string
+}
+
 async function getAuthorizedHeaders(instance: IPublicClientApplication) {
     const {accessToken} = await instance.acquireTokenSilent({
         scopes: ['api://1cfe66e3-db51-4082-93ad-0814bff72abf/default'],
@@ -74,4 +84,22 @@ export const addBalances = async (signal: AbortSignal, instance: IPublicClientAp
     const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${accountId}/balances/new`, requestOptions);
     const json = await request.json();
     return json as AccountBalanceDto;
+};
+
+export const addAccount = async (signal: AbortSignal, instance: IPublicClientApplication, newAccount: OpenAccountDto): Promise<AccountDto> => {
+    const headers = await getAuthorizedHeaders(instance);
+    headers.append('Content-Type', 'application/json');
+    const requestOptions = {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify(newAccount),
+        signal
+    };
+    const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/new`, requestOptions);
+    const json = await request.json();
+    if(request.ok){
+        return json as AccountDto;
+    }
+    const error = json as ErrorDto;
+    throw new Error(error.error);
 };
