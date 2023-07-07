@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base", ":pinVersions", ":assignee(julienje)", ":reviewer(julienje)"
+    "config:base", ":pinVersions"
   ]
 }
