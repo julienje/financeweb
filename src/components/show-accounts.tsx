@@ -6,16 +6,21 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
-import {AccordionDetails} from "@mui/material";
+import {AccordionDetails, CircularProgress} from "@mui/material";
+import {useTheme} from "@mui/material/styles";
 
 const ShowAccounts = () => {
-    const { instance } = useMsal();
+    const theme = useTheme();
+    const {instance} = useMsal();
     const [accounts, setAccounts] = useState<AccountDto[]>([]);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         const controller = new AbortController();
         const result = async () => {
+            setLoading(true);
             const data = await getAccounts(controller.signal, instance);
             setAccounts(data);
+            setLoading(false);
         }
         result().catch(console.error);
         return () => {
@@ -24,7 +29,7 @@ const ShowAccounts = () => {
     }, [instance]);
 
     const getCloseDate = (a: AccountDto) => {
-        if(a.CloseDate == null){
+        if (a.CloseDate == null) {
             return '';
         }
         return 'and closed at {a.CloseDate}';
@@ -45,11 +50,24 @@ const ShowAccounts = () => {
         );
     });
 
+    const readerInfo = () => {
+        if (loading) {
+            return (
+                <Box>
+                    <CircularProgress/>
+                </Box>
+            );
+        }
+        return renderAccounts();
+    }
+
 
     return (
-        <Box>
+        <Box sx={{
+            p: theme.spacing(1)
+        }}>
             <h1>Show your accounts:</h1>
-            {renderAccounts()}
+            {readerInfo()}
         </Box>
     );
 };

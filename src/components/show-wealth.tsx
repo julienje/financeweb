@@ -9,19 +9,24 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import {AccordionDetails} from "@mui/material";
+import {AccordionDetails, CircularProgress} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {useTheme} from "@mui/material/styles";
 
 const ShowWealth = () => {
+    const theme = useTheme();
     const [date, setDate] = useState<Dayjs | null>(dayjs());
     const {instance} = useMsal();
     const [wealth, setWealth] = useState<WealthDto>();
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         if (!!date) {
             const controller = new AbortController();
             const result = async () => {
+                setLoading(true);
                 const data = await getWealth(controller.signal, instance, date);
                 setWealth(data);
+                setLoading(false);
             }
             result().catch(console.error);
             return () => {
@@ -30,11 +35,22 @@ const ShowWealth = () => {
         }
     }, [date, instance]);
 
+    const readerInfo = () => {
+        if (loading) {
+            return (
+                <Box>
+                    <CircularProgress/>
+                </Box>
+            );
+        }
+        return renderWealth();
+    }
+
     const renderWealth = () => {
         const emptyDetails = (<Typography>There is no details</Typography>);
         const details = wealth?.Details.length === 0 ? emptyDetails : wealth?.Details.map(d =>
             (
-                <Accordion key={d.AccountId}>
+                <Accordion key={d.AccountId} >
                     <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
                         <Typography>{d.AccountName} - {d.AmountInChf} CHF</Typography>
                     </AccordionSummary>
@@ -56,7 +72,9 @@ const ShowWealth = () => {
     };
 
     return (
-        <Box>
+        <Box sx={{
+            p: theme.spacing(1)
+        }}>
             <h1>Get you actual wealth</h1>
             <form>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -68,7 +86,7 @@ const ShowWealth = () => {
                 </LocalizationProvider>
             </form>
             <div>
-                {renderWealth()}
+                {readerInfo()}
             </div>
         </Box>
     );
