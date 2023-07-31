@@ -6,7 +6,7 @@ import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs, {Dayjs} from "dayjs";
-import {Button, TextField} from "@mui/material";
+import {Button, CircularProgress, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useTheme} from '@mui/material/styles';
 
@@ -24,11 +24,14 @@ const AddBalances = () => {
     const [sent, setSent] = useState<{
         [index: string]: string;
     }>({});
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         const controller = new AbortController();
         const result = async () => {
+            setLoading(true);
             const data = await getAccounts(controller.signal, instance);
             setAccounts(data);
+            setLoading(false);
         }
         result().catch(console.error);
         return () => {
@@ -77,27 +80,42 @@ const AddBalances = () => {
         });
     }
 
-    return (
-        <Box>
-            <form onSubmit={handleSubmit}>
-                <h1>Add new Balances</h1>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                        label="New Balance at"
-                        value={date}
-                        onChange={(newValue) => setDate(newValue)}
-                    />
-                </LocalizationProvider>
-                <Box sx={{
-                    p: theme.spacing(1)
-                }}>
-                    <Typography>
-                        Please add a balance for concerned account, leave blank to skip.
-                    </Typography>
-                    {renderAccounts()}
+    const renderBalances = () => <form onSubmit={handleSubmit}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+                label="New Balance at"
+                value={date}
+                onChange={(newValue) => setDate(newValue)}
+            />
+        </LocalizationProvider>
+        <Box sx={{
+            p: theme.spacing(1)
+        }}>
+            <Typography>
+                Please add a balance for concerned account, leave blank to skip.
+            </Typography>
+            {renderAccounts()}
+        </Box>
+        <Button variant="contained" type="submit">Submit</Button>
+    </form>;
+
+    const readerInfo = () => {
+        if (loading) {
+            return (
+                <Box>
+                    <CircularProgress/>
                 </Box>
-                <Button variant="contained" type="submit">Submit</Button>
-            </form>
+            );
+        }
+        return renderBalances();
+    }
+
+    return (
+        <Box sx={{
+            p: theme.spacing(1)
+        }}>
+            <h1>Add new Balances</h1>
+            {readerInfo()}
         </Box>
     );
 }
