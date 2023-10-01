@@ -41,7 +41,7 @@ export interface OpenAccountDto {
     OpenDate: string
 }
 
-export interface ErrorDto{
+export interface ErrorDto {
     error: string
 }
 
@@ -58,7 +58,7 @@ async function getAuthorizedHeaders(instance: IPublicClientApplication) {
 export const getWealth = async (signal: AbortSignal, instance: IPublicClientApplication, date: Dayjs): Promise<WealthDto> => {
     const headers = await getAuthorizedHeaders(instance);
     const params = new URLSearchParams();
-    params.set('date',date.toISOString());
+    params.set('date', date.toISOString());
 
     const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/wealth?${params}`, {signal, headers});
     const json = await request.json();
@@ -70,6 +70,13 @@ export const getAccounts = async (signal: AbortSignal, instance: IPublicClientAp
     const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts`, {signal, headers});
     const json = await request.json();
     return json as AccountDto[];
+};
+
+export const getBalanceForAccount = async (signal: AbortSignal, instance: IPublicClientApplication, accountId: string): Promise<AccountBalanceDto[]> => {
+    const headers = await getAuthorizedHeaders(instance);
+    const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${accountId}/balances`, {signal, headers});
+    const json = await request.json();
+    return json as AccountBalanceDto[];
 };
 
 export const addBalances = async (signal: AbortSignal, instance: IPublicClientApplication, accountId: string, balance: AddBalanceDto): Promise<AccountBalanceDto> => {
@@ -97,7 +104,7 @@ export const addAccount = async (signal: AbortSignal, instance: IPublicClientApp
     };
     const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/new`, requestOptions);
     const json = await request.json();
-    if(request.ok){
+    if (request.ok) {
         return json as AccountDto;
     }
     const error = json as ErrorDto;
