@@ -1,4 +1,3 @@
-import {useTheme} from "@mui/material/styles";
 import {useMsal} from "@azure/msal-react";
 import React, {useEffect, useState} from "react";
 import {AccountBalanceDto, getBalanceForAccount} from "../service";
@@ -44,11 +43,11 @@ const ShowBalanceAccount = (props: { accountId: string }) => {
     }, [instance, needLoading, props.accountId]);
 
     const renderBalances = () => {
-        if(!loaded){
+        if (!loaded) {
             return null;
         }
-        if(loading){
-            return(
+        if (loading) {
+            return (
                 <Box>
                     <CircularProgress/>
                 </Box>
@@ -69,7 +68,7 @@ const ShowBalanceAccount = (props: { accountId: string }) => {
                     pageSizeOptions={[5]}
                     checkboxSelection
                     disableRowSelectionOnClick
-                    getRowId={r=> r.Id}
+                    getRowId={r => r.Id}
                 />
             </Box>
         );
