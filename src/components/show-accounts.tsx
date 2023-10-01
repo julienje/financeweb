@@ -8,6 +8,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import {AccordionDetails, CircularProgress} from "@mui/material";
 import {useTheme} from "@mui/material/styles";
+import ShowBalanceAccount from "./show-balance-account";
 
 const ShowAccounts = () => {
     const theme = useTheme();
@@ -45,6 +46,7 @@ const ShowAccounts = () => {
                     <Typography>
                         The account was open at {a.OpenDate} {getCloseDate(a)}
                     </Typography>
+                    <ShowBalanceAccount accountId={a.Id}/>
                 </AccordionDetails>
             </Accordion>
         );

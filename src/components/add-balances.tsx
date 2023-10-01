@@ -62,6 +62,7 @@ const AddBalances = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setSent({});
         const controller = new AbortController();
         Object.entries(balances).forEach(([key, value]) => {
             let amountInChf = Number(value);
