@@ -9,6 +9,8 @@ import Typography from "@mui/material/Typography";
 import {AccordionDetails, CircularProgress} from "@mui/material";
 import {useTheme} from "@mui/material/styles";
 import ShowBalanceAccount from "./show-balance-account";
+import dayjs from "dayjs";
+import {dateTimeTemplate} from "../constants";
 
 const ShowAccounts = () => {
     const theme = useTheme();
@@ -33,7 +35,7 @@ const ShowAccounts = () => {
         if (a.CloseDate == null) {
             return '';
         }
-        return 'and closed at {a.CloseDate}';
+        return `and closed on ${dayjs(a.CloseDate).format(dateTimeTemplate)}`;
     };
 
     const renderAccounts = () => accounts.map(a => {
@@ -44,7 +46,7 @@ const ShowAccounts = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        The account was open at {a.OpenDate} {getCloseDate(a)}
+                        The account was open on {dayjs(a.OpenDate).format(dateTimeTemplate)} {getCloseDate(a)}
                     </Typography>
                     <ShowBalanceAccount accountId={a.Id}/>
                 </AccordionDetails>

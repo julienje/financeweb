@@ -12,6 +12,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import {AccordionDetails, CircularProgress} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {useTheme} from "@mui/material/styles";
+import {dateTimeTemplate} from "../constants";
 
 const ShowWealth = () => {
     const theme = useTheme();
@@ -56,15 +57,17 @@ const ShowWealth = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography>
-                            The account {d.AccountName} by {d.AccountCompany} had {d.AmountInChf} CHF on {d.CheckDate}
+                            The account {d.AccountName} by {d.AccountCompany} had {d.AmountInChf} CHF
+                            on {dayjs(d.CheckDate).format(dateTimeTemplate)}
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
             ));
+        const exportDate = dayjs(wealth?.ExportDate).format(dateTimeTemplate);
         return (
             <Box>
                 <Typography>
-                    The wealth at {wealth?.ExportDate} is {wealth?.AmountInChf} CHF.
+                    The wealth on {exportDate} is {wealth?.AmountInChf} CHF.
                 </Typography>
                 {details}
             </Box>
