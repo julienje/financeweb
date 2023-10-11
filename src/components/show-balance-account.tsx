@@ -4,6 +4,7 @@ import {AccountBalanceDto, getBalanceForAccount} from "../service";
 import {Button, CircularProgress} from "@mui/material";
 import Box from "@mui/material/Box";
 import {DataGrid, GridColDef} from "@mui/x-data-grid";
+import dayjs from "dayjs";
 
 const ShowBalanceAccount = (props: { accountId: string }) => {
     const {instance} = useMsal();
@@ -15,11 +16,15 @@ const ShowBalanceAccount = (props: { accountId: string }) => {
     const columns: GridColDef[] = [
         {
             field: 'CheckDate',
-            headerName: 'Date'
+            headerName: 'Date',
+            flex: 1,
+            type: 'dateTime',
+            valueGetter: ({value}) => dayjs(value).toDate(),
         },
         {
             field: 'AmountInChf',
-            headerName: 'Amount'
+            headerName: 'Amount',
+            flex: 1
         }
     ];
 
