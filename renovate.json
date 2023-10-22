@@ -1,6 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base", ":pinVersions"
+    "config:best-practices", ":pinVersions"
+  ],
+  "automergeType": "branch",
+  "packageRules": [
+    {
+      "description": "Automerge patch updates",
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    }
   ]
 }
