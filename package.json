@@ -2,6 +2,9 @@
   "name": "financeweb",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "dependencies": {
     "@azure/msal-browser": "2.38.3",
     "@azure/msal-react": "1.5.12",
