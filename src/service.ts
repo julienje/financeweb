@@ -2,9 +2,14 @@ import {IPublicClientApplication} from "@azure/msal-browser";
 import {Dayjs} from "dayjs";
 
 export interface WealthDto {
-    AmountInChf: number,
+    AmountInChf: number
     ExportDate: string
     Details: WealthAccountDto[]
+}
+
+export interface TrendDto {
+    AmountInChf: number
+    CheckDate: string
 }
 
 export interface WealthAccountDto {
@@ -63,6 +68,13 @@ export const getWealth = async (signal: AbortSignal, instance: IPublicClientAppl
     const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/wealth?${params}`, {signal, headers});
     const json = await request.json();
     return json as WealthDto;
+};
+
+export const getTrend = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<TrendDto[]> => {
+    const headers = await getAuthorizedHeaders(instance);
+    const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/trend`, {signal, headers});
+    const json = await request.json();
+    return json as TrendDto[];
 };
 
 export const getAccounts = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<AccountDto[]> => {
