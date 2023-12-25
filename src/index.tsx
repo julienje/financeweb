@@ -12,6 +12,7 @@ import {MsalProvider} from "@azure/msal-react";
 import {msalConfig} from "./authConfig";
 import {PublicClientApplication} from "@azure/msal-browser";
 import AddAccount from "./components/add-account";
+import ShowTrend from "./components/show-trend";
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -25,6 +26,9 @@ const router = createBrowserRouter([
             {
                 path: "wealth",
                 element: <ShowWealth/>
+            }, {
+                path: "trend",
+                element: <ShowTrend/>
             },
             {
                 path: "accounts",
