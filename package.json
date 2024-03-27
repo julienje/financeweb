@@ -6,7 +6,7 @@
     "node": "20.9.0"
   },
   "dependencies": {
-    "@azure/msal-browser": "2.38.3",
+    "@azure/msal-browser": "2.38.4",
     "@azure/msal-react": "1.5.12",
     "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.0",
