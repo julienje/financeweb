@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {getWealth, WealthDto} from "../service";
 import {useMsal} from "@azure/msal-react";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";

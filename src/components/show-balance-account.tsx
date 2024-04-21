@@ -1,5 +1,5 @@
 import {useMsal} from "@azure/msal-react";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {AccountBalanceDto, getBalanceForAccount} from "../service";
 import {Button, CircularProgress} from "@mui/material";
 import Box from "@mui/material/Box";
