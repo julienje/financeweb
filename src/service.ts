@@ -65,28 +65,31 @@ export const getWealth = async (signal: AbortSignal, instance: IPublicClientAppl
     const params = new URLSearchParams();
     params.set('date', date.toISOString());
 
-    const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/wealth?${params}`, {signal, headers});
+    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/wealth?${params}`, {signal, headers});
     const json = await request.json();
     return json as WealthDto;
 };
 
 export const getTrend = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<TrendDto[]> => {
     const headers = await getAuthorizedHeaders(instance);
-    const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/trend`, {signal, headers});
+    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/trend`, {signal, headers});
     const json = await request.json();
     return json as TrendDto[];
 };
 
 export const getAccounts = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<AccountDto[]> => {
     const headers = await getAuthorizedHeaders(instance);
-    const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts`, {signal, headers});
+    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/accounts`, {signal, headers});
     const json = await request.json();
     return json as AccountDto[];
 };
 
 export const getBalanceForAccount = async (signal: AbortSignal, instance: IPublicClientApplication, accountId: string): Promise<AccountBalanceDto[]> => {
     const headers = await getAuthorizedHeaders(instance);
-    const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${accountId}/balances`, {signal, headers});
+    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/accounts/${accountId}/balances`, {
+        signal,
+        headers
+    });
     const json = await request.json();
     return json as AccountBalanceDto[];
 };
@@ -100,7 +103,7 @@ export const addBalances = async (signal: AbortSignal, instance: IPublicClientAp
         body: JSON.stringify(balance),
         signal
     };
-    const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/${accountId}/balances/new`, requestOptions);
+    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/accounts/${accountId}/balances/new`, requestOptions);
     const json = await request.json();
     return json as AccountBalanceDto;
 };
@@ -114,7 +117,7 @@ export const addAccount = async (signal: AbortSignal, instance: IPublicClientApp
         body: JSON.stringify(newAccount),
         signal
     };
-    const request = await fetch(`${process.env.REACT_APP_BACKEND_URL}/accounts/new`, requestOptions);
+    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/accounts/new`, requestOptions);
     const json = await request.json();
     if (request.ok) {
         return json as AccountDto;
