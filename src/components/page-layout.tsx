@@ -1,5 +1,4 @@
 import {Outlet} from "react-router";
-import React from "react";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import {createTheme, ThemeProvider} from "@mui/material/styles";

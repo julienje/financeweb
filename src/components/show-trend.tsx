@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {getTrend, TrendDto} from "../service";
 import {useMsal} from "@azure/msal-react";
 import dayjs from "dayjs";

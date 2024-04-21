@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {AccountDto, getAccounts} from "../service";
 import {useMsal} from "@azure/msal-react";
 import Box from "@mui/material/Box";
