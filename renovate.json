@@ -9,6 +9,13 @@
       "description": "Automerge patch updates",
       "matchUpdateTypes": ["patch"],
       "automerge": true
+    },
+    {
+      "matchPackageNames": [
+        "@azure/msal-browser",
+        "@azure/msal-react"
+      ],
+      "groupName": "msal"
     }
   ]
 }
