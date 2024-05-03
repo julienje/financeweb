@@ -21,7 +21,7 @@ const ShowWealth = () => {
     const [wealth, setWealth] = useState<WealthDto>();
     const [loading, setLoading] = useState(false);
     useEffect(() => {
-        if (!!date) {
+        if (date) {
             const controller = new AbortController();
             const result = async () => {
                 setLoading(true);

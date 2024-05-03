@@ -11,9 +11,7 @@ import Typography from "@mui/material/Typography";
 import {useTheme} from '@mui/material/styles';
 
 
-interface BalanceInfo {
-    [index: string]: string | undefined;
-}
+type BalanceInfo = Record<string, string | undefined>;
 
 const AddBalances = () => {
     const theme = useTheme();
@@ -21,9 +19,7 @@ const AddBalances = () => {
     const [date, setDate] = useState<Dayjs | null>(dayjs());
     const [accounts, setAccounts] = useState<AccountDto[]>([]);
     const [balances, setBalances] = useState<BalanceInfo>({});
-    const [sent, setSent] = useState<{
-        [index: string]: string;
-    }>({});
+    const [sent, setSent] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         const controller = new AbortController();
@@ -65,7 +61,7 @@ const AddBalances = () => {
         setSent({});
         const controller = new AbortController();
         Object.entries(balances).forEach(([key, value]) => {
-            let amountInChf = Number(value);
+            const amountInChf = Number(value);
             if (!Number.isNaN(amountInChf)) {
                 addBalances(controller.signal, instance, key, {
                     CheckDate: date!.toISOString(), // TODO JJ Make validation of form?
@@ -80,6 +76,11 @@ const AddBalances = () => {
             }
         });
     }
+
+    const renderCurrentTotal = () => Object.entries(balances)
+        .map(([, value]) => Number(value))
+        .filter(value => !Number.isNaN(value))
+        .reduce((sum, current) => sum + current, 0);
 
     const renderBalances = () => <form onSubmit={handleSubmit}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -96,6 +97,9 @@ const AddBalances = () => {
                 Please add a balance for concerned account, leave blank to skip.
             </Typography>
             {renderAccounts()}
+            <Typography>
+                The current total of the balances is : {renderCurrentTotal()}
+            </Typography>
         </Box>
         <Button variant="contained" type="submit">Submit</Button>
     </form>;
