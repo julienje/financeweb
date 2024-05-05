@@ -27,6 +27,7 @@ const PageLayout = () => {
                     <Link href={`/wealth`}>Wealth</Link>
                     <Link href={`/trend`}>Trend</Link>
                     <Link href={`/balances`}>Balance</Link>
+                    <Link href={`/investment`}>Investment</Link>
                     <Link href={`/accounts`}>Accounts</Link>
                     <Link href={`/account/new`}>New account</Link>
                 </Box>
