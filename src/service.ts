@@ -50,6 +50,22 @@ export interface ErrorDto {
     error: string
 }
 
+export interface AddInvestmentDto {
+    AmountInChf: number
+    InvestmentDate: string
+}
+
+export interface InvestmentDto {
+    Id: string
+    CompanyName: string
+    AmountInChf: number
+    InvestmentDate: string
+}
+
+export interface CompanyDto {
+    Name: string
+}
+
 async function getAuthorizedHeaders(instance: IPublicClientApplication) {
     const {accessToken} = await instance.acquireTokenSilent({
         scopes: ['api://1cfe66e3-db51-4082-93ad-0814bff72abf/default'],
@@ -121,6 +137,41 @@ export const addAccount = async (signal: AbortSignal, instance: IPublicClientApp
     const json = await request.json();
     if (request.ok) {
         return json as AccountDto;
+    }
+    const error = json as ErrorDto;
+    throw new Error(error.error);
+};
+
+export const addInvestment = async (signal: AbortSignal, instance: IPublicClientApplication, company: string, newInvestment: AddInvestmentDto): Promise<InvestmentDto> => {
+    const headers = await getAuthorizedHeaders(instance);
+    headers.append('Content-Type', 'application/json');
+    const requestOptions = {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify(newInvestment),
+        signal
+    };
+    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/investment/companies/${company}/new`, requestOptions);
+    const json = await request.json();
+    if (request.ok) {
+        return json as InvestmentDto;
+    }
+    const error = json as ErrorDto;
+    throw new Error(error.error);
+};
+
+export const getInvestmentCompany = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<CompanyDto[]> => {
+    const headers = await getAuthorizedHeaders(instance);
+    headers.append('Content-Type', 'application/json');
+    const requestOptions = {
+        method: 'GET',
+        headers,
+        signal
+    };
+    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/investment/companies`, requestOptions);
+    const json = await request.json();
+    if (request.ok) {
+        return json as CompanyDto[];
     }
     const error = json as ErrorDto;
     throw new Error(error.error);
