@@ -26,6 +26,7 @@ const PageLayout = () => {
                 }}>
                     <Link href={`/wealth`}>Wealth</Link>
                     <Link href={`/trend`}>Trend</Link>
+                    <Link href={`/profit`}>Profit</Link>
                     <Link href={`/balances`}>Balance</Link>
                     <Link href={`/investment`}>Investment</Link>
                     <Link href={`/accounts`}>Accounts</Link>

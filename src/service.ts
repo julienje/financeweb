@@ -66,6 +66,24 @@ export interface CompanyDto {
     Name: string
 }
 
+export interface ProfitMoneyDto {
+    InvestmentInChf: number
+    WealthInChf: number
+}
+
+export interface CompanyProfitDto {
+    Profit: ProfitMoneyDto
+    Company: string
+    Details: WealthAccountDto[]
+}
+
+export interface ProfitDto {
+    Profit: ProfitMoneyDto
+    Details: CompanyProfitDto[]
+    ProfitDate: string
+}
+
+
 async function getAuthorizedHeaders(instance: IPublicClientApplication) {
     const {accessToken} = await instance.acquireTokenSilent({
         scopes: ['api://1cfe66e3-db51-4082-93ad-0814bff72abf/default'],
@@ -172,6 +190,23 @@ export const getInvestmentCompany = async (signal: AbortSignal, instance: IPubli
     const json = await request.json();
     if (request.ok) {
         return json as CompanyDto[];
+    }
+    const error = json as ErrorDto;
+    throw new Error(error.error);
+};
+
+export const getProfit = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<ProfitDto> => {
+    const headers = await getAuthorizedHeaders(instance);
+    headers.append('Content-Type', 'application/json');
+    const requestOptions = {
+        method: 'GET',
+        headers,
+        signal
+    };
+    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/investment/profit`, requestOptions);
+    const json = await request.json();
+    if (request.ok) {
+        return json as ProfitDto;
     }
     const error = json as ErrorDto;
     throw new Error(error.error);
