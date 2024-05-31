@@ -2,11 +2,14 @@ import {useEffect, useState} from "react";
 import {getProfit, ProfitDto} from "../service";
 import {useMsal} from "@azure/msal-react";
 import Box from "@mui/material/Box";
-import {CircularProgress} from "@mui/material";
+import {AccordionDetails, CircularProgress} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useTheme} from '@mui/material/styles';
 import dayjs from "dayjs";
 import {dateTimeTemplate} from "../constants.ts";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Accordion from "@mui/material/Accordion";
 
 const ShowProfit = () => {
     const theme = useTheme();
@@ -27,6 +30,7 @@ const ShowProfit = () => {
         }
     }, [instance]);
 
+
     const renderInfo = () => {
         if (!profit) {
             return (
@@ -41,13 +45,37 @@ const ShowProfit = () => {
         }
 
         const profitDate = dayjs(profit.ProfitDate).format(dateTimeTemplate);
-        const gain = profit.Profit.WealthInChf - profit.Profit.InvestmentInChf;
+        const companies = profit.Details.map(d => {
+            const balanceDetails = d.Details.map(bd => {
+                const accountCheckDate = dayjs(bd.CheckDate).format(dateTimeTemplate);
+                return (
+                    <Typography key={bd.AccountId}>
+                        On {accountCheckDate} the account {bd.AccountName} has {bd.AmountInChf} CHF
+                    </Typography>
+                );
+            });
+            return (
+                <Accordion key={d.Company}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                        <Typography>On {d.Company} the profit is {d.Profit.WealthInChf} CHF
+                            for {d.Profit.InvestmentInChf} CHF invested
+                            ({d.Profit.WealthInChf - d.Profit.InvestmentInChf} CHF).</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+
+                        {balanceDetails}
+                    </AccordionDetails>
+                </Accordion>
+            );
+        });
         return (
             <Box>
                 <Typography>
-                    The profit on {profitDate} is {profit.Profit.WealthInChf} CHF
-                    for {profit.Profit.InvestmentInChf} CHF invested ({gain} CHF).
+                    At {profitDate} the profit is {profit.Profit.WealthInChf} CHF
+                    for {profit.Profit.InvestmentInChf} CHF invested
+                    ({profit.Profit.WealthInChf - profit.Profit.InvestmentInChf} CHF).
                 </Typography>
+                {companies}
             </Box>
         )
     }
