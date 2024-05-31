@@ -13,6 +13,7 @@ import {PublicClientApplication} from "@azure/msal-browser";
 import AddAccount from "./components/add-account";
 import ShowTrend from "./components/show-trend";
 import AddInvestment from "./components/add-investment.tsx";
+import ShowProfit from "./components/show-profit.tsx";
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: "investment",
                 element: <AddInvestment/>,
+            },
+            {
+                path: "profit",
+                element: <ShowProfit/>,
             }
         ],
     },

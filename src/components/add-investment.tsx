@@ -53,52 +53,53 @@ const AddInvestment = () => {
             ));
 
     const renderInvestment = () => {
-        return (<Box>
-            <form onSubmit={handleSubmit}>
-                <Box sx={{
-                    p: theme.spacing(1)
-                }}>
-
-                    <FormControl fullWidth>
-                        <InputLabel id="company-label">Company</InputLabel>
-                        <Select
-                            labelId="company-label"
-                            value={company}
-                            onChange={(event) => setCompany(event.target.value)}
-                        >
-                            {renderCompany()}
-                        </Select>
-                    </FormControl>
-                </Box>
-                <Box sx={{
-                    p: theme.spacing(1)
-                }}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            label="Invested at"
-                            value={date}
-                            onChange={(newValue) => setDate(newValue)}
-                        />
-                    </LocalizationProvider>
-                </Box>
-                <Box sx={{
-                    p: theme.spacing(1)
-                }}>
-                    <TextField
-                        label="Amount in CHF"
-                        value={amount}
-                        onChange={(event) => setAmount(event.target.value)}/>
-                </Box>
-                <Box sx={{
-                    p: theme.spacing(1)
-                }}>
-                    <Button variant="contained" type="submit">Submit</Button>
-                </Box>
-            </form>
-            <Typography>
-                {status}
-            </Typography>
-        </Box>)
+        return (
+            <Box>
+                <form onSubmit={handleSubmit}>
+                    <Box sx={{
+                        p: theme.spacing(1)
+                    }}>
+                        <FormControl sx={{minWidth: 120}}>
+                            <InputLabel id="company-label">Company</InputLabel>
+                            <Select
+                                labelId="company-label"
+                                value={company}
+                                onChange={(event) => setCompany(event.target.value)}
+                            >
+                                {renderCompany()}
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    <Box sx={{
+                        p: theme.spacing(1)
+                    }}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                label="Invested at"
+                                value={date}
+                                onChange={(newValue) => setDate(newValue)}
+                            />
+                        </LocalizationProvider>
+                    </Box>
+                    <Box sx={{
+                        p: theme.spacing(1)
+                    }}>
+                        <TextField
+                            label="Amount in CHF"
+                            value={amount}
+                            onChange={(event) => setAmount(event.target.value)}/>
+                    </Box>
+                    <Box sx={{
+                        p: theme.spacing(1)
+                    }}>
+                        <Button variant="contained" type="submit">Submit</Button>
+                    </Box>
+                </form>
+                <Typography>
+                    {status}
+                </Typography>
+            </Box>
+        )
     }
 
     const readerInfo = () => {
