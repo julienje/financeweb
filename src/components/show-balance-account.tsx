@@ -19,7 +19,7 @@ const ShowBalanceAccount = (props: { accountId: string }) => {
             headerName: 'Date',
             flex: 1,
             type: 'dateTime',
-            valueGetter: ({value}) => dayjs(value).toDate(),
+            valueGetter: (value) => dayjs(value).toDate(),
         },
         {
             field: 'AmountInChf',
