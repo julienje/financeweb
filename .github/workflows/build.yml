@@ -15,4 +15,4 @@ jobs:
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
       - name: Building web app
-        uses: azure/appservice-build@v3
+        uses: azure/appservice-build@fb787afed09d7c240cf0a72b42a266142741fde6 # v3
