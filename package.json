@@ -9,8 +9,8 @@
   "dependencies": {
     "@azure/msal-browser": "3.20.0",
     "@azure/msal-react": "2.0.22",
-    "@emotion/react": "11.12.0",
-    "@emotion/styled": "11.12.0",
+    "@emotion/react": "11.13.0",
+    "@emotion/styled": "11.13.0",
     "@mui/icons-material": "5.16.4",
     "@mui/material": "5.16.4",
     "@mui/x-charts": "7.11.0",
