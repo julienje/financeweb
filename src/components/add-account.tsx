@@ -24,7 +24,7 @@ const AddAccount = () => {
             setStatus('New Account in progress');
             addAccount(controller.signal, instance, {Name: name, Company: company, OpenDate: date.toISOString()})
                 .then(() => setStatus('New Account is created'))
-                .catch((text) => setStatus(`Error: ${text.message}`));
+                .catch((text: Error) => setStatus(`Error: ${text.message}`));
         }
     }
 
