@@ -16,6 +16,12 @@
         "@azure/msal-react"
       ],
       "groupName": "msal"
+    },
+    {
+      "matchPackageNames": [
+        "node"
+      ],
+      "separateMultipleMinor": true
     }
   ]
 }
