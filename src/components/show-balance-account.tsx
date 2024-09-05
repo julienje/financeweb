@@ -58,6 +58,9 @@ const ShowBalanceAccount = (props: { accountId: string }) => {
                 </Box>
             );
         }
+
+        const getRowId = (r: AccountBalanceDto): string => r.Id;
+
         return (
             <Box>
                 <DataGrid
@@ -73,7 +76,7 @@ const ShowBalanceAccount = (props: { accountId: string }) => {
                     pageSizeOptions={[5]}
                     checkboxSelection
                     disableRowSelectionOnClick
-                    getRowId={r => r.Id}
+                    getRowId={getRowId}
                 />
             </Box>
         );

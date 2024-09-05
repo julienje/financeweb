@@ -43,7 +43,7 @@ const AddInvestment = () => {
                 InvestmentDate: date.toISOString()
             })
                 .then(() => setStatus('New Investement is created'))
-                .catch((text) => setStatus(`Error: ${text.message}`));
+                .catch((text: Error) => setStatus(`Error: ${text.message}`));
         }
     }
     const renderCompany = () => companies

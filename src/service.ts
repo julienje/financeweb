@@ -99,23 +99,23 @@ export const getWealth = async (signal: AbortSignal, instance: IPublicClientAppl
     const params = new URLSearchParams();
     params.set('date', date.toISOString());
 
-    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/wealth?${params}`, {signal, headers});
-    const json = await request.json();
-    return json as WealthDto;
+    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/wealth?${params.toString()}`, {
+        signal,
+        headers
+    });
+    return await request.json() as WealthDto;
 };
 
 export const getTrend = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<TrendDto[]> => {
     const headers = await getAuthorizedHeaders(instance);
     const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/trend`, {signal, headers});
-    const json = await request.json();
-    return json as TrendDto[];
+    return await request.json() as TrendDto[];
 };
 
 export const getAccounts = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<AccountDto[]> => {
     const headers = await getAuthorizedHeaders(instance);
     const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/accounts`, {signal, headers});
-    const json = await request.json();
-    return json as AccountDto[];
+    return await request.json() as AccountDto[];
 };
 
 export const getBalanceForAccount = async (signal: AbortSignal, instance: IPublicClientApplication, accountId: string): Promise<AccountBalanceDto[]> => {
@@ -124,8 +124,7 @@ export const getBalanceForAccount = async (signal: AbortSignal, instance: IPubli
         signal,
         headers
     });
-    const json = await request.json();
-    return json as AccountBalanceDto[];
+    return await request.json() as AccountBalanceDto[];
 };
 
 export const addBalances = async (signal: AbortSignal, instance: IPublicClientApplication, accountId: string, balance: AddBalanceDto): Promise<AccountBalanceDto> => {
@@ -138,8 +137,7 @@ export const addBalances = async (signal: AbortSignal, instance: IPublicClientAp
         signal
     };
     const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/accounts/${accountId}/balances/new`, requestOptions);
-    const json = await request.json();
-    return json as AccountBalanceDto;
+    return await request.json() as AccountBalanceDto;
 };
 
 export const addAccount = async (signal: AbortSignal, instance: IPublicClientApplication, newAccount: OpenAccountDto): Promise<AccountDto> => {
@@ -152,11 +150,10 @@ export const addAccount = async (signal: AbortSignal, instance: IPublicClientApp
         signal
     };
     const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/accounts/new`, requestOptions);
-    const json = await request.json();
     if (request.ok) {
-        return json as AccountDto;
+        return await request.json() as AccountDto;
     }
-    const error = json as ErrorDto;
+    const error = await request.json() as ErrorDto;
     throw new Error(error.error);
 };
 
@@ -170,11 +167,10 @@ export const addInvestment = async (signal: AbortSignal, instance: IPublicClient
         signal
     };
     const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/investment/companies/${company}/new`, requestOptions);
-    const json = await request.json();
     if (request.ok) {
-        return json as InvestmentDto;
+        return await request.json() as InvestmentDto;
     }
-    const error = json as ErrorDto;
+    const error = await request.json() as ErrorDto;
     throw new Error(error.error);
 };
 
@@ -187,11 +183,10 @@ export const getInvestmentCompany = async (signal: AbortSignal, instance: IPubli
         signal
     };
     const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/investment/companies`, requestOptions);
-    const json = await request.json();
     if (request.ok) {
-        return json as CompanyDto[];
+        return await request.json() as CompanyDto[];
     }
-    const error = json as ErrorDto;
+    const error = await request.json() as ErrorDto;
     throw new Error(error.error);
 };
 
@@ -204,10 +199,9 @@ export const getProfit = async (signal: AbortSignal, instance: IPublicClientAppl
         signal
     };
     const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/investment/profit`, requestOptions);
-    const json = await request.json();
     if (request.ok) {
-        return json as ProfitDto;
+        return await request.json() as ProfitDto;
     }
-    const error = json as ErrorDto;
+    const error = await request.json() as ErrorDto;
     throw new Error(error.error);
 };
