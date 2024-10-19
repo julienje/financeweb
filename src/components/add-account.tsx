@@ -14,6 +14,7 @@ const AddAccount = () => {
     const theme = useTheme();
     const [name, setName] = useState<string>('');
     const [company, setCompany] = useState<string>('');
+    const [type, setType] = useState<string>('');
     const [status, setStatus] = useState<string>('');
     const [date, setDate] = useState<Dayjs | null>(dayjs());
     const {instance} = useMsal();
@@ -47,6 +48,14 @@ const AddAccount = () => {
                         label="Company"
                         value={company}
                         onChange={(event) => setCompany(event.target.value)}/>
+                </Box>
+                <Box sx={{
+                    p: theme.spacing(1)
+                }}>
+                    <TextField
+                        label="Type"
+                        value={type}
+                        onChange={(event) => setType(event.target.value)}/>
                 </Box>
                 <Box sx={{
                     p: theme.spacing(1)
