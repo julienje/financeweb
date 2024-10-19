@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import {Button, TextField} from "@mui/material";
+import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import dayjs, {Dayjs} from "dayjs";
 import {addAccount} from "../service";
 import {useMsal} from "@azure/msal-react";
@@ -14,7 +14,7 @@ const AddAccount = () => {
     const theme = useTheme();
     const [name, setName] = useState<string>('');
     const [company, setCompany] = useState<string>('');
-    const [type, setType] = useState<string>('');
+    const [type, setType] = useState<string>('Unknown');
     const [status, setStatus] = useState<string>('');
     const [date, setDate] = useState<Dayjs | null>(dayjs());
     const {instance} = useMsal();
@@ -23,7 +23,12 @@ const AddAccount = () => {
         const controller = new AbortController();
         if (name && company && date) {
             setStatus('New Account in progress');
-            addAccount(controller.signal, instance, {Name: name, Company: company, OpenDate: date.toISOString()})
+            addAccount(controller.signal, instance, {
+                Name: name,
+                Company: company,
+                OpenDate: date.toISOString(),
+                Type: type
+            })
                 .then(() => setStatus('New Account is created'))
                 .catch((text: Error) => setStatus(`Error: ${text.message}`));
         }
@@ -52,10 +57,21 @@ const AddAccount = () => {
                 <Box sx={{
                     p: theme.spacing(1)
                 }}>
-                    <TextField
-                        label="Type"
-                        value={type}
-                        onChange={(event) => setType(event.target.value)}/>
+                    <FormControl>
+                        <InputLabel id="type-label">Type</InputLabel>
+                        <Select
+                            labelId="type-label"
+                            id="type-select"
+                            value={type}
+                            label="Age"
+                            onChange={(event) => setType(event.target.value)}
+                        >
+                            <MenuItem value={"Unknown"}>Unknown</MenuItem>
+                            <MenuItem value={"3A"}>3A</MenuItem>
+                            <MenuItem value={"ETF"}>ETF</MenuItem>
+                            <MenuItem value={"AvailableToTrade"}>Available To Trade</MenuItem>
+                        </Select>
+                    </FormControl>
                 </Box>
                 <Box sx={{
                     p: theme.spacing(1)
