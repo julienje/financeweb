@@ -24,6 +24,7 @@ export interface AccountDto {
     Id: string,
     Name: string,
     Company: string,
+    Type: string,
     OpenDate: string,
     CloseDate: string
 }
@@ -43,6 +44,7 @@ export interface AccountBalanceDto {
 export interface OpenAccountDto {
     Name: string
     Company: string
+    Type: string
     OpenDate: string
 }
 

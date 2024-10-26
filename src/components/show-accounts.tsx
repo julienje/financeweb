@@ -42,7 +42,7 @@ const ShowAccounts = () => {
         return (
             <Accordion key={a.Id}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-                    <Typography>{a.Name} - {a.Company}</Typography>
+                    <Typography>{a.Name} - {a.Type} - {a.Company}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
