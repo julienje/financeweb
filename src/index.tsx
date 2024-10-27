@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import {StrictMode} from 'react';
+import {createRoot} from 'react-dom/client';
 import './index.css';
 import App from './App';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
@@ -55,13 +55,12 @@ const router = createBrowserRouter([
     },
 ]);
 
-const root = ReactDOM.createRoot(
+createRoot(
     document.getElementById('root')!
-);
-root.render(
-    <React.StrictMode>
+).render(
+    <StrictMode>
         <MsalProvider instance={msalInstance}>
             <RouterProvider router={router}/>
         </MsalProvider>
-    </React.StrictMode>
+    </StrictMode>
 );
