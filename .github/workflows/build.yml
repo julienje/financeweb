@@ -13,9 +13,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Cancel if source branch is 'renovate'
-        if: startsWith(github.head_ref, 'renovate/')
-        run: echo "Cancelling build because the source branch is a feature branch." && exit 0
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: Building web app
         uses: azure/appservice-build@fb787afed09d7c240cf0a72b42a266142741fde6 # v3
