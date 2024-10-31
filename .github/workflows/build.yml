@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  run_if:
+  build:
     if: !(startsWith(github.head_ref, 'renovate/'))
     runs-on: ubuntu-latest
     steps:
