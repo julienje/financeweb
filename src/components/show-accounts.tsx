@@ -38,11 +38,29 @@ const ShowAccounts = () => {
         return `and closed on ${dayjs(a.CloseDate).format(dateTimeTemplate)}`;
     };
 
-    const renderAccounts = () => accounts.map(a => {
+    const renderCompanies = (accounts: AccountDto[]) => {
+        const groupedObj = Object.groupBy(accounts, (account: AccountDto) => {
+            return account.Company;
+        });
+        return Object.entries(groupedObj).map(([key, value]) => {
+            return (
+                <Accordion key={key}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                        <Typography>{key}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        {renderAccounts(value)}
+                    </AccordionDetails>
+                </Accordion>
+            );
+        });
+    };
+
+    const renderAccounts = (accounts: AccountDto[]) => accounts.map(a => {
         return (
             <Accordion key={a.Id}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-                    <Typography>{a.Name} - {a.Type} - {a.Company}</Typography>
+                    <Typography>{a.Name} - {a.Type}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
@@ -62,7 +80,7 @@ const ShowAccounts = () => {
                 </Box>
             );
         }
-        return renderAccounts();
+        return renderCompanies(accounts);
     }
 
 
