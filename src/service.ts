@@ -207,3 +207,19 @@ export const getProfit = async (signal: AbortSignal, instance: IPublicClientAppl
     const error = await request.json() as ErrorDto;
     throw new Error(error.error);
 };
+
+export const getInvestmentForCompany = async (signal: AbortSignal, instance: IPublicClientApplication, company: string): Promise<InvestmentDto[]> => {
+    const headers = await getAuthorizedHeaders(instance);
+    headers.append('Content-Type', 'application/json');
+    const requestOptions = {
+        method: 'GET',
+        headers,
+        signal
+    };
+    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/investment/companies/${company}`, requestOptions);
+    if (request.ok) {
+        return await request.json() as InvestmentDto[];
+    }
+    const error = await request.json() as ErrorDto;
+    throw new Error(error.error);
+};
