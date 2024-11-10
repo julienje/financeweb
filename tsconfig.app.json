@@ -3,7 +3,8 @@
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": [
-      "ES2020",
+      "ESNext",
+      // Update to es 2024 after ts 5.7
       "DOM",
       "DOM.Iterable"
     ],

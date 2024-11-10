@@ -74,9 +74,12 @@ const ShowAccounts = () => {
             return account.Company;
         });
         return Object.entries(groupedObj).map(([key, value]) => {
+            if (value == null) {
+                return null;
+            }
             const isInvestmentCompany = investmentCompanies.some(c => c.Name === key);
             return isInvestmentCompany ? showAccountForInvestmentCompany(key, value) : showAccountForNonInvestmentCompany(key, value);
-        });
+        }).filter(e => e != null);
     };
 
     const renderAccounts = (accounts: AccountDto[]) => accounts.map(a => {
