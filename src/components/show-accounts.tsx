@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {AccountDto, getAccounts} from "../service";
+import {AccountDto, CompanyDto, getAccounts, getInvestmentCompany} from "../service";
 import {useMsal} from "@azure/msal-react";
 import Box from "@mui/material/Box";
 import Accordion from "@mui/material/Accordion";
@@ -11,18 +11,22 @@ import {useTheme} from "@mui/material/styles";
 import ShowBalanceAccount from "./show-balance-account";
 import dayjs from "dayjs";
 import {dateTimeTemplate} from "../constants";
+import ShowInvestmentCompany from "./show-investment-company.tsx";
 
 const ShowAccounts = () => {
     const theme = useTheme();
     const {instance} = useMsal();
     const [accounts, setAccounts] = useState<AccountDto[]>([]);
+    const [investmentCompanies, setInvestmentCompanies] = useState<CompanyDto[]>([]);
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         const controller = new AbortController();
         const result = async () => {
             setLoading(true);
             const data = await getAccounts(controller.signal, instance);
+            const companiesData = await getInvestmentCompany(controller.signal, instance);
             setAccounts(data);
+            setInvestmentCompanies(companiesData);
             setLoading(false);
         }
         result().catch(console.error);
@@ -38,21 +42,40 @@ const ShowAccounts = () => {
         return `and closed on ${dayjs(a.CloseDate).format(dateTimeTemplate)}`;
     };
 
+    const showAccountForInvestmentCompany = (company: string, accounts: AccountDto[]) => (
+        <Accordion key={company}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                <Typography>{company}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+                <Box>
+                    <ShowInvestmentCompany company={company}/>
+                </Box>
+                <Box>
+                    {renderAccounts(accounts)}
+                </Box>
+            </AccordionDetails>
+        </Accordion>
+    );
+
+    const showAccountForNonInvestmentCompany = (company: string, accounts: AccountDto[]) => (
+        <Accordion key={company}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                <Typography>{company}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+                {renderAccounts(accounts)}
+            </AccordionDetails>
+        </Accordion>
+    );
+
     const renderCompanies = (accounts: AccountDto[]) => {
         const groupedObj = Object.groupBy(accounts, (account: AccountDto) => {
             return account.Company;
         });
         return Object.entries(groupedObj).map(([key, value]) => {
-            return (
-                <Accordion key={key}>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-                        <Typography>{key}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        {renderAccounts(value)}
-                    </AccordionDetails>
-                </Accordion>
-            );
+            const isInvestmentCompany = investmentCompanies.some(c => c.Name === key);
+            return isInvestmentCompany ? showAccountForInvestmentCompany(key, value) : showAccountForNonInvestmentCompany(key, value);
         });
     };
 
