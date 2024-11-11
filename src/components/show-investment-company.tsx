@@ -15,7 +15,7 @@ const ShowInvestmentCompany = (props: { company: string }) => {
 
     const columns: GridColDef[] = [
         {
-            field: 'CheckDate',
+            field: 'InvestmentDate',
             headerName: 'Date',
             flex: 1,
             type: 'dateTime',
