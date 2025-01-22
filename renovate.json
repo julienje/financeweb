@@ -21,7 +21,8 @@
       "matchPackageNames": [
         "node"
       ],
-      "separateMultipleMinor": true
+      "separateMultipleMinor": true,
+      "separateMinorPatch": true
     }
   ]
 }
