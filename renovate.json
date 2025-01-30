@@ -4,6 +4,8 @@
     "config:best-practices", ":pinVersions"
   ],
   "automergeType": "branch",
+  "separateMultipleMinor": true,
+  "separateMinorPatch": true,
   "packageRules": [
     {
       "description": "Automerge patch updates",
@@ -16,13 +18,6 @@
         "@azure/msal-react"
       ],
       "groupName": "msal"
-    },
-    {
-      "matchPackageNames": [
-        "node"
-      ],
-      "separateMultipleMinor": true,
-      "separateMinorPatch": true
     }
   ]
 }
