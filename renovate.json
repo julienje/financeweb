@@ -4,8 +4,6 @@
     "config:best-practices", ":pinVersions"
   ],
   "automergeType": "branch",
-  "separateMultipleMinor": true,
-  "separateMinorPatch": true,
   "packageRules": [
     {
       "description": "Automerge patch updates",
