@@ -48,9 +48,11 @@ const ShowProfit = () => {
         const companies = profit.Details.map(d => {
             const balanceDetails = d.Details.map(bd => {
                 const accountCheckDate = dayjs(bd.CheckDate).format(dateTimeTemplate);
+                const percentage = Math.round((bd.AmountInChf * 100.0) / d.Profit.WealthInChf);
                 return (
                     <Typography key={bd.AccountId}>
                         On {accountCheckDate} the account {bd.AccountName} has {bd.AmountInChf} CHF
+                        representing {percentage}
                     </Typography>
                 );
             });
@@ -62,7 +64,6 @@ const ShowProfit = () => {
                             ({d.Profit.WealthInChf - d.Profit.InvestmentInChf} CHF).</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-
                         {balanceDetails}
                     </AccordionDetails>
                 </Accordion>
