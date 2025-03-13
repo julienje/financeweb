@@ -192,7 +192,7 @@ export const getInvestmentCompany = async (signal: AbortSignal, instance: IPubli
     throw new Error(error.error);
 };
 
-export const getProfit = async (signal: AbortSignal, instance: IPublicClientApplication): Promise<ProfitDto> => {
+export const getProfit = async (signal: AbortSignal, instance: IPublicClientApplication, date: Dayjs): Promise<ProfitDto> => {
     const headers = await getAuthorizedHeaders(instance);
     headers.append('Content-Type', 'application/json');
     const requestOptions = {
@@ -200,7 +200,9 @@ export const getProfit = async (signal: AbortSignal, instance: IPublicClientAppl
         headers,
         signal
     };
-    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/investment/profit`, requestOptions);
+    const params = new URLSearchParams();
+    params.set('date', date.toISOString());
+    const request = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/investment/profit?${params.toString()}`, requestOptions);
     if (request.ok) {
         return await request.json() as ProfitDto;
     }

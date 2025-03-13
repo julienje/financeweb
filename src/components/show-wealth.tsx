@@ -16,7 +16,7 @@ import {dateTimeTemplate} from "../constants";
 
 const ShowWealth = () => {
     const theme = useTheme();
-    const [date, setDate] = useState<Dayjs | null>(dayjs());
+    const [date, setDate] = useState<Dayjs>(dayjs());
     const {instance} = useMsal();
     const [wealth, setWealth] = useState<WealthDto>();
     const [loading, setLoading] = useState(false);
@@ -84,7 +84,7 @@ const ShowWealth = () => {
                     <DatePicker
                         label="Wealth at"
                         value={date}
-                        onChange={(newValue) => setDate(newValue)}
+                        onChange={(newValue) => setDate(newValue ?? dayjs())}
                     />
                 </LocalizationProvider>
             </form>

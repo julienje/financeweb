@@ -7,8 +7,8 @@
     "node": "22.14.0"
   },
   "dependencies": {
-    "@azure/msal-browser": "4.5.1",
-    "@azure/msal-react": "3.0.5",
+    "@azure/msal-browser": "4.7.0",
+    "@azure/msal-react": "3.0.6",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.0",
     "@mui/icons-material": "6.4.7",
@@ -32,7 +32,7 @@
     "eslint-plugin-react-refresh": "0.4.19",
     "globals": "16.0.0",
     "typescript": "5.8.2",
-    "typescript-eslint": "8.26.0",
+    "typescript-eslint": "8.26.1",
     "vite": "6.2.1"
   },
   "scripts": {

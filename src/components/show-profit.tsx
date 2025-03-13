@@ -5,22 +5,26 @@ import Box from "@mui/material/Box";
 import {AccordionDetails, CircularProgress} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useTheme} from '@mui/material/styles';
-import dayjs from "dayjs";
+import dayjs, {Dayjs} from "dayjs";
 import {dateTimeTemplate} from "../constants.ts";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
+import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 
 const ShowProfit = () => {
     const theme = useTheme();
     const [profit, setProfit] = useState<ProfitDto | null>(null);
+    const [date, setDate] = useState<Dayjs>(dayjs());
     const [loading, setLoading] = useState(false);
     const {instance} = useMsal();
     useEffect(() => {
         const controller = new AbortController();
         const result = async () => {
             setLoading(true);
-            const data = await getProfit(controller.signal, instance);
+            const data = await getProfit(controller.signal, instance, date);
             setProfit(data);
             setLoading(false);
         }
@@ -28,7 +32,7 @@ const ShowProfit = () => {
         return () => {
             controller.abort();
         }
-    }, [instance]);
+    }, [date, instance]);
 
 
     const renderInfo = () => {
@@ -97,6 +101,15 @@ const ShowProfit = () => {
             p: theme.spacing(1)
         }}>
             <h1>Profit</h1>
+            <form>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        label="Profit at"
+                        value={date}
+                        onChange={(newValue) => setDate(newValue ?? dayjs())}
+                    />
+                </LocalizationProvider>
+            </form>
             {renderLoading()}
         </Box>
     );
