@@ -40,10 +40,5 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
-  },
-  "overrides": {
-    "@azure/msal-react": {
-      "react": "19.1.0"
-    }
   }
 }
