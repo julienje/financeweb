@@ -3,7 +3,7 @@
   "extends": [
     "config:best-practices", ":pinVersions"
   ],
-  "automergeType": "branch",
+  "minimumReleaseAge": "7",
   "packageRules": [
     {
       "description": "Automerge patch updates",
