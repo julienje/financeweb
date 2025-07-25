@@ -4,6 +4,9 @@
     "config:best-practices", ":pinVersions"
   ],
   "minimumReleaseAge": "7",
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "description": "Automerge patch updates",
