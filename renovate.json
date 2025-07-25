@@ -3,7 +3,7 @@
   "extends": [
     "config:best-practices", ":pinVersions"
   ],
-  "minimumReleaseAge": "7",
+  "minimumReleaseAge": "7 days",
   "lockFileMaintenance": {
     "enabled": true
   },
