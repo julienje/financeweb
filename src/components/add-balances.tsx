@@ -10,14 +10,13 @@ import {Button, CircularProgress, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useTheme} from '@mui/material/styles';
 
-
 type BalanceInfo = Record<string, string | undefined>;
 
 const AddBalances = () => {
     const theme = useTheme();
     const {instance} = useMsal();
     const [date, setDate] = useState<Dayjs | null>(dayjs());
-    const [accounts, setAccounts] = useState<AccountDto[]>([]);
+    const [accounts, setAccounts] = useState<Map<string, AccountDto[]>>(new Map());
     const [balances, setBalances] = useState<BalanceInfo>({});
     const [sent, setSent] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
@@ -25,7 +24,8 @@ const AddBalances = () => {
         const controller = new AbortController();
         const result = async () => {
             setLoading(true);
-            const data = await getAccounts(controller.signal, instance);
+            const rawData = await getAccounts(controller.signal, instance);
+            const data = Map.groupBy(rawData.filter(a => a.CloseDate == null), d => d.Company);
             setAccounts(data);
             setLoading(false);
         }
@@ -34,26 +34,35 @@ const AddBalances = () => {
             controller.abort();
         }
     }, [instance]);
-    const renderAccounts = () => accounts
-        .filter(a => a.CloseDate == null)
+    const renderAccounts = (accs: AccountDto[]) => accs
         .map(a => {
             return (
                 <Box key={a.Id} sx={{
                     p: theme.spacing(1)
                 }}>
-                    {
-                        <TextField
-                            label={a.Name}
-                            inputProps={{inputMode: 'numeric'}}
-                            value={balances[a.Id] ?? ''}
-                            onChange={(event) => setBalances({
-                                ...balances,
-                                [a.Id]: event.target.value
-                            })}/>
-                    }
+                    <TextField
+                        label={a.Name}
+                        slotProps={{htmlInput: {inputMode: 'numeric'}}}
+                        value={balances[a.Id] ?? ''}
+                        onChange={(event) => setBalances({
+                            ...balances,
+                            [a.Id]: event.target.value
+                        })}/>
                     {sent[a.Id] ?? ''}
                 </Box>
             );
+        });
+
+    const renderCompany = () =>
+        Array.from(accounts, ([company, account]) => {
+            return (
+                <Box key={company} sx={{
+                    p: theme.spacing(1)
+                }}>
+                    {company}
+                    {renderAccounts(account)}
+                </Box>
+            )
         });
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -96,7 +105,7 @@ const AddBalances = () => {
             <Typography>
                 Please add a balance for concerned account, leave blank to skip.
             </Typography>
-            {renderAccounts()}
+            {renderCompany()}
             <Typography>
                 The current total of the balances is : {renderCurrentTotal()}
             </Typography>
