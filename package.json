@@ -7,8 +7,8 @@
     "node": "22.20.0"
   },
   "dependencies": {
-    "@azure/msal-browser": "4.26.2",
-    "@azure/msal-react": "3.0.22",
+    "@azure/msal-browser": "4.27.0",
+    "@azure/msal-react": "3.0.23",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
     "@mui/icons-material": "7.3.6",
