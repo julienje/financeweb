@@ -25,4 +25,4 @@ jobs:
           output_location: "/dist" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
         env:
-          VITE_APP_BACKEND_URL: 'https://financeapp-jj.azurewebsites.net'
+          VITE_APP_BACKEND_URL: 'https://finance-jj.azurewebsites.net'
